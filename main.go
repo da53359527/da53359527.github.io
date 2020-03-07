@@ -9,7 +9,7 @@ import (
 
 func main() {
 	var listenPort string
-	listenPort = "8788"
+	listenPort = "80"
 	r := mux.NewRouter()
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./app/")))
 	log.Printf("Listen on port: %+v\n", listenPort)

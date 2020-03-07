@@ -1,38 +1,40 @@
-$(document).ready(function() {
-  $.getJSON('/config.json', function(config) {
-    var brushImg = '/imgs/brush.png'
-    var topImg = '/imgs/mask.png'
+$(document).ready(function () {
+  var scratchZoneHeight = $('.scratch-zone').height()
+  var scratchZoneWidth = $('.scratch-zone').width()
 
-    var canvas = $('#scratch')
-    var ctx = canvas[0].getContext('2d')
-    var canvasWidth = canvas.width()
-    var canvasHeight = canvas.height()
+  var canvas = $('#scratch')
+  var ctx = canvas[0].getContext('2d')
+  canvas.width(scratchZoneWidth)
+  canvas.height(scratchZoneHeight)
+  ctx.canvas.width = scratchZoneWidth
+  ctx.canvas.height = scratchZoneHeight
+  var canvasWidth = canvas.width()
+  var canvasHeight = canvas.height()
 
-    var prizePool = gerenatePrizePool(config.prize)
-    $('.prize').prop('src', '/imgs/prize/' + getRandPrize(prizePool))
+  var maskImg = new Image()
+  maskImg.src = '/imgs/mask.png'
 
-    image = new Image()
-    brush = new Image()
+  maskImg.onload = function () {
+      ctx.drawImage(maskImg, 0, 0, maskImg.width, maskImg.height, 0 ,0 , canvasWidth, canvasHeight)
+      // $('.prize').css({ visibility: 'visible' })
+  }
 
-    image.src = topImg
-    image.onload = function() {
-      ctx.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvasWidth, canvasHeight)
-      $('.prize').css({ visibility: 'visible' })
-    }
-    brush.src = brushImg
+  var brushImg = new Image()
+  brushImg.src = '/imgs/brush.png'
 
-    canvas.on('mousedown', handleMouseDown)
-    canvas.on('mousemove', handleMouseMove)
-    canvas.on('mouseup', handleMouseUp)
 
-    canvas.on('touchstart', handleMouseDown)
-    canvas.on('touchmove', handleMouseMove)
-    canvas.on('touchend', handleMouseUp)
+  canvas.on('mousedown', handleMouseDown)
+  canvas.on('mousemove', handleMouseMove)
+  canvas.on('mouseup', handleMouseUp)
 
-    var isDrawing = false
-    var lastPoint
+  canvas.on('touchstart', handleMouseDown)
+  canvas.on('touchmove', handleMouseMove)
+  canvas.on('touchend', handleMouseUp)
 
-    function gerenatePrizePool(prizeList) {
+  var isDrawing = false
+  var lastPoint
+
+  function gerenatePrizePool(prizeList) {
       var pool = []
 
       prizeList.forEach((prize) => {
@@ -76,7 +78,7 @@ $(document).ready(function() {
         x = lastPoint.x + Math.sin(angle) * i - 25
         y = lastPoint.y + Math.cos(angle) * i - 25
         ctx.globalCompositeOperation = 'destination-out'
-        ctx.drawImage(brush, x, y)
+        ctx.drawImage(brushImg, x, y)
       }
 
       lastPoint = currentPoint
@@ -109,7 +111,7 @@ $(document).ready(function() {
         canvas
           .parent()
           .children('#scratch')
-          .remove()
+          .hide()
       }
     }
 
@@ -135,5 +137,4 @@ $(document).ready(function() {
 
       return Math.round((count / total) * 100)
     }
-  })
 })
