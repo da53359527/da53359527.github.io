@@ -1,5 +1,5 @@
 var config = {
-  "openPercent": 50, // 刮開多少百分比後, 自動清除遮罩
+  "openPercent": 70, // 刮開多少百分比後, 自動清除遮罩
   "prizeZone": {
     "width": 80,  // 可刮區域的寬 (佔螢幕百分比 %)
     "height": 50  // 可刮區域的高 (佔螢幕百分比 %)
