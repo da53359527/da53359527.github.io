@@ -143,4 +143,8 @@ $(document).ready(function () {
 
   makePrizePool()
   $(".prize").attr("src", "imgs/prize/" + getRandPrize())
+
+  $(".scratch-container").on("click", ".scratch-agian", function(){
+    location.reload()
+  })
 })

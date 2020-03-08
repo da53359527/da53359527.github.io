@@ -1,5 +1,6 @@
 html, body {
   margin: 0;
+  text-align: center;
 }
 
 .scratch-container,
@@ -33,4 +34,22 @@ html, body {
 
   top: 0px;
   left: 0px;
+}
+
+.scratch-container .scratch-agian {
+  position: absolute;
+
+  top: 0px;
+  right: 0px;
+
+  z-index: 6;
+
+  color: rgb(255, 255, 255);
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    padding: 5px 10px 5px 10px;
+    background: rgb(255, 170, 4);
+    transition: all 0.15s ease 0s;
 }
