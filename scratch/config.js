@@ -25,7 +25,7 @@ var config = {
     },
     {
       "chance": 60,
-      "img": "AKKE.JPG"
+      "img": "prize004.jpg"
     }
   ]
 }
