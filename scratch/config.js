@@ -8,23 +8,23 @@ var config = {
   // 獎品池  chance: 開出機率,  img: 獎品圖片名稱(含副檔名) (ex. prize.png)
   "prize": [
     {
-      "chance": 1,
+      "chance": 20,
       "img": "no-prize.png"
     },
     {
-      "chance": 1,
+      "chance": 20,
       "img": "prize002.jpg"
     },
     {
-      "chance": 1,
+      "chance": 20,
       "img": "prize003.jpg"
     },
     {
-      "chance": 1,
+      "chance": 20,
       "img": "prize001.jpg"
     },
     {
-      "chance": 96,
+      "chance": 20,
       "img": "prize004.JPG"
     }
   ]
