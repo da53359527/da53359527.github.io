@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="config.js"></script>
     <script src="main.js"></script>
@@ -10,12 +10,17 @@
 
 <body>
     <div class="scratch-container">
-        <button class="scratch-agian">再刮一次</button>
+        <div class="loading"></div>
         <img class="bgImg" src="imgs/background.png"></img>
         <div class="scratch-zone">
             <img class="prize" src="imgs/prize/no-prize.png">
             <canvas class="mask"></canvas>
         </div>
+        <div class="btn-group">
+            <img class="sound mute" src="imgs/mute.png">
+            <img class="refresh" src="imgs/refresh.png">
+        </div>
+        </iframe> 
     </div>
 </body>
 

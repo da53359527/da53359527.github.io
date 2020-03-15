@@ -1,16 +1,20 @@
 $(document).ready(function () {
     var container = $('.scratch-container')
+    var loading = $('.loading')
     var scratchZone = $('.scratch-zone')
+    var btnGroup = $('.btn-group')
+    var sound = new Audio();
+    sound.src = "sound/background.mp3"
+    sound.loop = true
 
     container.width($(window).width())
     container.height((container.width() / 9) * 16)
 
-    scratchZone.width(container.width() * (config.prizeZone.width / 100))
-    scratchZone.height(container.height() * (config.prizeZone.height / 100))
-    scratchZone.css({
-        left: (100 - config.prizeZone.width) / 2 + "%",
-        top: (100 - config.prizeZone.height) / 2 + "%",
-    })
+    scratchZone.width(container.width())
+    scratchZone.height(container.height())
+
+    loading.width(container.width())
+    loading.height(container.height())
 
     var prizePool = []
 
@@ -27,6 +31,7 @@ $(document).ready(function () {
     maskImg.onload = function () {
         ctx.drawImage(maskImg, 0, 0, maskImg.width, maskImg.height, 0, 0, scratchZone.width(), scratchZone.height())
         scratchZone.find(".prize").show()
+        imageLoaded()
     }
 
     var brushImg = new Image()
@@ -147,7 +152,52 @@ $(document).ready(function () {
     makePrizePool()
     $(".prize").attr("src", "imgs/prize/" + getRandPrize())
 
-    $(".scratch-container").on("click", ".scratch-agian", function () {
+    $(".btn-group").on("click", ".refresh", function () {
         location.reload()
     })
+
+    $(".btn-group").on("click", ".mute", function () {
+        $(this).removeClass("mute").addClass("unmute").attr("src", "imgs/unmute.png")
+        sound.play()
+    })
+
+    $(".btn-group").on("click", ".unmute", function () {
+        $(this).removeClass("unmute").addClass("mute").attr("src", "imgs/mute.png")
+        sound.pause()
+    })
+
+    // Images loaded is zero because we're going to process a new set of images.
+    var imagesLoaded = 0;
+    // Total images is still the total number of <img> elements on the page.
+    var totalImages = $('img').length + 1;
+
+    // Step through each image in the DOM, clone it, attach an onload event
+    // listener, then set its source to the source of the original image. When
+    // that new image has loaded, fire the imageLoaded() callback.
+    $('img').each(function (idx, img) {
+        $('<img>').on('load', imageLoaded).attr('src', $(img).attr('src'));
+    });
+
+    // Do exactly as we had before -- increment the loaded count and if all are
+    // loaded, call the allImagesLoaded() function.
+    function imageLoaded() {
+        imagesLoaded++;
+        if (imagesLoaded == totalImages) {
+            allImagesLoaded();
+        }
+    }
+
+    function allImagesLoaded() {
+        $('.btn-group img').css({
+            "margin-left": config.buttonGap / 2 + "px",
+            "margin-right": config.buttonGap / 2 + "px"
+        })
+
+        btnGroup.css({
+            "left": "50%",
+            "margin-left": ((btnGroup.width() / 2) * -1) + "px",
+        })
+
+        loading.fadeOut()
+    }
 })
