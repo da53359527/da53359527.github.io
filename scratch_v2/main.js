@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    document.body.requestFullscreen()
     var container = $('.scratch-container')
     var loading = $('.loading')
     var scratchZone = $('.scratch-zone')
