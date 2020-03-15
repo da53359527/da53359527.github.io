@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var container = $('.scratch-container')
+    var loading = $('.loading')
     var scratchZone = $('.scratch-zone')
     var btnGroup = $('.btn-group')
     var sound = new Audio();
@@ -11,6 +12,9 @@ $(document).ready(function () {
 
     scratchZone.width(container.width())
     scratchZone.height(container.height())
+
+    loading.width(container.width())
+    loading.height(container.height())
 
     var prizePool = []
 
@@ -27,6 +31,7 @@ $(document).ready(function () {
     maskImg.onload = function () {
         ctx.drawImage(maskImg, 0, 0, maskImg.width, maskImg.height, 0, 0, scratchZone.width(), scratchZone.height())
         scratchZone.find(".prize").show()
+        imageLoaded()
     }
 
     var brushImg = new Image()
@@ -161,12 +166,38 @@ $(document).ready(function () {
         sound.pause()
     })
 
-    $('.btn-group img').css({
-        "margin-left": config.buttonGap / 2 + "px",
-        "margin-right": config.buttonGap / 2 + "px"
-    })
+    // Images loaded is zero because we're going to process a new set of images.
+    var imagesLoaded = 0;
+    // Total images is still the total number of <img> elements on the page.
+    var totalImages = $('img').length + 1;
 
-    btnGroup.css({
-        "margin-left": ((btnGroup.width() / 2) * -1) + "px",
-    })
+    // Step through each image in the DOM, clone it, attach an onload event
+    // listener, then set its source to the source of the original image. When
+    // that new image has loaded, fire the imageLoaded() callback.
+    $('img').each(function (idx, img) {
+        $('<img>').on('load', imageLoaded).attr('src', $(img).attr('src'));
+    });
+
+    // Do exactly as we had before -- increment the loaded count and if all are
+    // loaded, call the allImagesLoaded() function.
+    function imageLoaded() {
+        imagesLoaded++;
+        if (imagesLoaded == totalImages) {
+            allImagesLoaded();
+        }
+    }
+
+    function allImagesLoaded() {
+        $('.btn-group img').css({
+            "margin-left": config.buttonGap / 2 + "px",
+            "margin-right": config.buttonGap / 2 + "px"
+        })
+
+        btnGroup.css({
+            "left": "50%",
+            "margin-left": ((btnGroup.width() / 2) * -1) + "px",
+        })
+
+        loading.fadeOut()
+    }
 })
